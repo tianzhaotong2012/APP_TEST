@@ -19,6 +19,8 @@ def stop_app(dev):
     pi= subprocess.Popen(action,shell=True,stdout=subprocess.PIPE)
 
 def get_wm_size(dev):
+    if dev == 'YT910960LR':
+        return [720,1280]
     action='adb -s ' + dev + ' shell wm size'
     print action
     sizes = subprocess.Popen(
