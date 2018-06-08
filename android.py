@@ -18,9 +18,34 @@ def stop_app(dev):
     print action
     pi= subprocess.Popen(action,shell=True,stdout=subprocess.PIPE)
 
+def unlock(dev):
+    if dev == 'YT910960LR':
+        action='adb -s ' + dev + ' shell input keyevent 26'
+        print action
+        pi= subprocess.Popen(action,shell=True,stdout=subprocess.PIPE)
+    if dev == '1b9bec68':
+        action='adb -s ' + dev + ' shell input keyevent 26'
+        print action
+        pi= subprocess.Popen(action,shell=True,stdout=subprocess.PIPE)
+        time.sleep( 2 )
+        action='adb -s ' + dev + ' shell input swipe ' + '%d %d %d %d'%(200, 500, 300, 200)
+        print action
+        pi= subprocess.Popen(action,shell=True,stdout=subprocess.PIPE)
+        action='adb -s ' + dev + ' shell input swipe ' + '%d %d %d %d'%(200, 500, 300, 200)
+        time.sleep( 2 )
+        print action
+        pi= subprocess.Popen(action,shell=True,stdout=subprocess.PIPE)
+
+def go_home(dev):
+    action='adb -s ' + dev + ' shell input keyevent 4'
+    print action
+    pi= subprocess.Popen(action,shell=True,stdout=subprocess.PIPE)
+
 def get_wm_size(dev):
     if dev == 'YT910960LR':
         return [720,1280]
+    if dev == '4d00582857ae60d9':
+        return [1080,1920]
     action='adb -s ' + dev + ' shell wm size'
     print action
     sizes = subprocess.Popen(
@@ -85,6 +110,12 @@ def read(dev):
 
 
 def test_device(dev):
+    unlock(dev)
+    t = random.randint( 2,300 )
+    for num in range(0,t):
+        sleep_time = random.randint( 1, 10 )
+        go_home( dev )
+        time.sleep( sleep_time )
     start_app(dev)
     time.sleep( 10 )
 
