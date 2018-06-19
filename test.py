@@ -2,11 +2,13 @@
 import wda
 import time
 
-bundle_id = 'com.tian.shixunkuaibao'
+#bundle_id = 'com.tian.shixunkuaibao'
+bundle_id = 'com.jifen.qukan'
 
 c = wda.Client('http://localhost:8100')
 
 s = c.session(bundle_id)
+
 
 time.sleep( 10 )
 
