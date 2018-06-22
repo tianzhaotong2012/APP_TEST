@@ -46,6 +46,15 @@ def unlock(dev):
         action='adb -s ' + dev + ' shell input swipe ' + '%d %d %d %d'%(200, 600, 300, 200)
         print action
         pi= subprocess.Popen(action,shell=True,stdout=subprocess.PIPE)
+    #360 Q5
+    if dev == 'f535cc6e':
+        action='adb -s ' + dev + ' shell input keyevent 26'
+        print action
+        pi= subprocess.Popen(action,shell=True,stdout=subprocess.PIPE)
+        time.sleep( 2 )
+        action='adb -s ' + dev + ' shell input swipe ' + '%d %d %d %d'%(200, 600, 300, 200)
+        print action
+        pi= subprocess.Popen(action,shell=True,stdout=subprocess.PIPE)
 
 def go_home(dev):
     action='adb -s ' + dev + ' shell input keyevent 4'
@@ -166,7 +175,7 @@ print serial_nos
 #print wm_size
 #exit(0)
 
-p = Pool(4)
+p = Pool(7)
 for dev in serial_nos:
     print('Parent process %s.' % os.getpid())
     p.apply_async(test_device, args=(dev,))

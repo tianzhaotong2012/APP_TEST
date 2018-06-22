@@ -165,7 +165,7 @@ print serial_nos
 #print wm_size
 #exit(0)
 
-p = Pool(4)
+p = Pool(7)
 for dev in serial_nos:
     print('Parent process %s.' % os.getpid())
     p.apply_async(test_device, args=(dev,))
