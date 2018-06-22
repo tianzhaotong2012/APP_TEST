@@ -24,6 +24,11 @@ def unlock(dev):
         action='adb -s ' + dev + ' shell input keyevent 26'
         print action
         pi= subprocess.Popen(action,shell=True,stdout=subprocess.PIPE)
+    #huawei
+    if dev == 'b4305223f728':
+        action='adb -s ' + dev + ' shell input keyevent 26'
+        print action
+        pi= subprocess.Popen(action,shell=True,stdout=subprocess.PIPE)
     #hongmi
     if dev == '1b9bec68':
         action='adb -s ' + dev + ' shell input keyevent 26'
@@ -55,6 +60,15 @@ def unlock(dev):
         action='adb -s ' + dev + ' shell input swipe ' + '%d %d %d %d'%(200, 600, 300, 200)
         print action
         pi= subprocess.Popen(action,shell=True,stdout=subprocess.PIPE)
+    #360 weiguo
+    if dev == '1642302782':
+        action='adb -s ' + dev + ' shell input keyevent 26'
+        print action
+        pi= subprocess.Popen(action,shell=True,stdout=subprocess.PIPE)
+        time.sleep( 2 )
+        action='adb -s ' + dev + ' shell input swipe ' + '%d %d %d %d'%(200, 600, 300, 200)
+        print action
+        pi= subprocess.Popen(action,shell=True,stdout=subprocess.PIPE)
 
 def go_home(dev):
     action='adb -s ' + dev + ' shell input keyevent 4'
@@ -64,6 +78,8 @@ def go_home(dev):
 def get_wm_size(dev):
     if dev == 'YT910960LR':
         return [720,1280]
+    if dev == 'b4305223f728':
+        return [540,960]
     if dev == '4d00582857ae60d9':
         return [1080,1920]
     action='adb -s ' + dev + ' shell wm size'
