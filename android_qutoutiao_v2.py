@@ -6,14 +6,14 @@ import time
 from multiprocessing import Pool
 
 def start_app(dev):
-    package_name = 'com.tian.news'
-    activity_name = '.ui.activity.AdsplashActivity'
+    package_name = 'com.jifen.qukan'
+    activity_name = 'com.jifen.qkbase.view.activity.MainActivity'
     action='adb -s ' + dev + ' shell am start ' + '%s/%s'%(package_name, activity_name)
     print action
     pi= subprocess.Popen(action,shell=True,stdout=subprocess.PIPE)
 
 def stop_app(dev):
-    package_name = 'com.tian.news'
+    package_name = 'com.jifen.qukan'
     action='adb -s ' + dev + ' shell am force-stop ' + package_name
     print action
     pi= subprocess.Popen(action,shell=True,stdout=subprocess.PIPE)
@@ -24,7 +24,7 @@ def unlock(dev):
         action='adb -s ' + dev + ' shell input keyevent 26'
         print action
         pi= subprocess.Popen(action,shell=True,stdout=subprocess.PIPE)
-    #huawei-G620-L75
+    #huawei
     if dev == 'b4305223f728':
         action='adb -s ' + dev + ' shell input keyevent 26'
         print action
@@ -78,10 +78,10 @@ def go_home(dev):
 def get_wm_size(dev):
     if dev == 'YT910960LR':
         return [720,1280]
-    if dev == '4d00582857ae60d9':
-        return [1080,1920]
     if dev == 'b4305223f728':
         return [540,960]
+    if dev == '4d00582857ae60d9':
+        return [1080,1920]
     action='adb -s ' + dev + ' shell wm size'
     print action
     sizes = subprocess.Popen(
@@ -112,7 +112,7 @@ def swipe_to(dev, dis):
         print action
         pi= subprocess.Popen(action,shell=True,stdout=subprocess.PIPE)
         org = org + y1 - y2
-        time.sleep( 1 )
+        time.sleep( 3 )
         if org > dis:
             break
 
@@ -120,14 +120,33 @@ def click_article_item(dev):
     wm_size = get_wm_size(dev)
     W = wm_size[0]
     H = wm_size[1]
-    x= random.randint(W/2-100,W/2+100)
-    y =  random.randint(H/2-100,H/2+100)
+    #x= random.randint(W/2-100,W/2+100)
+    #y =  random.randint(H/2-100,H/2+100)
+    x = (int)(W*0.333)
+    y = (int)(H*0.63)
     action='adb -s ' + dev + ' shell input tap ' + '%d %d'%(x, y)
     print action
     pi= subprocess.Popen(action,shell=True,stdout=subprocess.PIPE)
 
 
 def go_back(dev):
+    wm_size = get_wm_size(dev)
+    W = wm_size[0]
+    H = wm_size[1]
+    x1 = (int)(W*0.176)
+    y1 = (int)(H*0.083)
+    action='adb -s ' + dev + ' shell input tap ' + '%d %d'%(x1, y1)
+    print action
+    pi= subprocess.Popen(action,shell=True,stdout=subprocess.PIPE)
+    time.sleep( 2 )
+    action='adb -s ' + dev + ' shell input keyevent 4'
+    print action
+    pi= subprocess.Popen(action,shell=True,stdout=subprocess.PIPE)
+    time.sleep( 4 )
+    action='adb -s ' + dev + ' shell input keyevent 4'
+    print action
+    pi= subprocess.Popen(action,shell=True,stdout=subprocess.PIPE)
+    time.sleep( 4 )
     action='adb -s ' + dev + ' shell input keyevent 4'
     print action
     pi= subprocess.Popen(action,shell=True,stdout=subprocess.PIPE)
@@ -139,15 +158,15 @@ def read(dev):
     dis = random.randint(H*2,H*6)
     swipe_to(dev, dis)
     click_article_item(dev)
-    sleep_time = random.randint(3,10)
+    sleep_time = random.randint(10,13)
     time.sleep( sleep_time )
-    swipe_to(dev, H*5)
+    swipe_to(dev, H*12)
     go_back(dev)
 
 
 def test_device(dev):
     unlock(dev)
-    t = random.randint( 2,300 )
+    t = random.randint( 2,6 )
     for num in range(0,t):
         sleep_time = random.randint( 1, 10 )
         go_home( dev )
@@ -155,7 +174,7 @@ def test_device(dev):
     start_app(dev)
     time.sleep( 10 )
 
-    for num in range(0,10):
+    for num in range(0,50):
         read(dev)
         sleep_time = random.randint( 2, 8 )
         time.sleep( sleep_time )

@@ -61,7 +61,7 @@ def read():
     go_back()
 
 def recom_test():
-    for num in range(0,20):
+    for num in range(0,50):
         read()
         time.sleep( 1 )
 
